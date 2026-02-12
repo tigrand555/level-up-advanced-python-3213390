@@ -13,7 +13,8 @@ def get_data():
 def get_rhines_times():
     """Return a list of Jennifer Rhines' race times"""
     races = get_data()
-    pass
+    rhines_times = re.findall(r'(\d+:\d+\.?\d+)\s+Jennifer Rhines', races)
+    return rhines_times
 
 def get_average():
     """Return Jennifer Rhines' average race time in the format:
@@ -22,4 +23,14 @@ def get_average():
        s corresponds to a seconds digit
        M corresponds to a milliseconds digit (no rounding, just the single digit)"""
     racetimes = get_rhines_times()
-    pass
+    total = datetime.timedelta()
+    for racetime in racetimes:
+        try:
+            mins, secs, ms = re.split(r'[:.]', racetime)
+            print(mins, secs, ms)
+            total += datetime.timedelta(minutes=int(mins), seconds=int(secs), milliseconds=int(ms))
+        except ValueError:
+            mins, secs = re.split(r'[:.]', racetime)
+            total += datetime.timedelta(minutes=int(mins), seconds=int(secs))
+    return f'{total / len(racetimes)}'[2:-5]
+
