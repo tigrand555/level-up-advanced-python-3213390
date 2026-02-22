@@ -1,4 +1,4 @@
-from challenge.pairwise_offset import pairwise_offset
+from challenge.pairwise_offset_solution import pairwise_offset
 
 def test_no_offset():
     actual = list(pairwise_offset('abcde'))
@@ -18,6 +18,5 @@ def test_offset():
 def test_more_offset_than_items():
     actual = list(pairwise_offset([(1, 2), (3, 4), (5, 6)], offset=4))
     expected = [((1, 2), '*'), ((3, 4), '*'), ((5, 6), '*'), ('*', '*'), ('*', (1, 2)), ('*', (3, 4)), ('*', (5, 6))]
-    assert expected == actual
-
+    assert expected == actual 
 
